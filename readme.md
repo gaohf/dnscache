@@ -18,6 +18,12 @@ The cache is thread safe. Create a new instance by specifying how long each entr
 
     //get an array of net.IP
     ips, _ := resolver.Fetch("api.viki.io")
+    
+    //get rand one of net.IP
+    ip, _ := resolver.FetchRand("api.viki.io")
+    
+    //get rand one of net.IP as string
+    ips, _ := resolver.FetchRandString("api.viki.io")
 
     //get the first net.IP
     ip, _ := resolver.FetchOne("api.viki.io")
