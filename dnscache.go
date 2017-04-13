@@ -5,6 +5,7 @@ import (
   "net"
   "sync"
   "time"
+  "math/rand"
 )
 
 type Resolver struct {
@@ -29,6 +30,22 @@ func (r *Resolver) Fetch(address string) ([]net.IP, error) {
   if exists { return ips, nil }
 
   return r.Lookup(address)
+}
+
+func (r *Resolver) FetchRand(address string) (net.IP, error) {
+  ips, err := r.Fetch(address)
+  if err != nil || len(ips) == 0 { return nil, err}
+  ipsLen := len(ips)
+  iSeq := rand.Intn(ipsLen)
+  return ips[iSeq], nil
+}
+
+func (r *Resolver) FetchRandString(address string) (string, error) {
+  ips, err := r.Fetch(address)
+  if err != nil || len(ips) == 0 { return "", err}
+  ipsLen := len(ips)
+  iSeq := rand.Intn(ipsLen)
+  return ips[iSeq].String(), nil
 }
 
 func (r *Resolver) FetchOne(address string) (net.IP, error) {
